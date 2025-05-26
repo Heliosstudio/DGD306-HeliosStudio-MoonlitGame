@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      orbwind_anim3_0: 7698527206115801780
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
