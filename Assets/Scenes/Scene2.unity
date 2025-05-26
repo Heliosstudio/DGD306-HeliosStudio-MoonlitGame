@@ -442,6 +442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   bulletPrefab: {fileID: 8855464216240417169, guid: d3ef02b763ce4884a952cb3947ae0d31, type: 3}
+  iceBlastPrefab: {fileID: 5985411283011944668, guid: 94a9fe19e5250ef44bcb790bb6b91564, type: 3}
   firePoint: {fileID: 876382991}
 --- !u!61 &313766784
 BoxCollider2D:
@@ -656,6 +657,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 474c8bb0-af82-4b57-a9fe-d722a3dc968a
     m_ActionName: 'Player2/Fire[/Keyboard/numpad0,/XInputControllerWindows/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a956c98-738e-4d85-9ef9-01900fc10440
+    m_ActionName: 'Player1/Special[/Keyboard/t]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1abef77-d87a-491f-b2f0-c35dd21ed981
+    m_ActionName: 'Player2/Special[/Keyboard/numpadEnter]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player1
@@ -727,11 +736,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f766b051409c2bd4194cace303dc5d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7264873369512437772, guid: 94694dbb68fe83f4c9b8eb214607a766, type: 3}
+  enemyTypeA: {fileID: 7264873369512437772, guid: 94694dbb68fe83f4c9b8eb214607a766, type: 3}
+  enemyTypeB: {fileID: 7788795833040229938, guid: ceba4644403da1640babb8a553e3c382, type: 3}
   spawnInterval: 2
-  minY: -3
-  maxY: 3
-  spawnX: 9
 --- !u!4 &402343321
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,6 +1496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1173365883}
+  - component: {fileID: 1173365884}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1511,6 +1519,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1173365884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173365882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfd34a9e7de75d4aad657ab9078da82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 2
+  enemiesKilled: 0
+  enemiesToKillForNextLevel: 10
 --- !u!1 &1286543873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,6 +1687,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 474c8bb0-af82-4b57-a9fe-d722a3dc968a
     m_ActionName: 'Player2/Fire[/Keyboard/numpad0,/XInputControllerWindows/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a956c98-738e-4d85-9ef9-01900fc10440
+    m_ActionName: 'Player1/Special[/Keyboard/t]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1abef77-d87a-491f-b2f0-c35dd21ed981
+    m_ActionName: 'Player2/Special[/Keyboard/numpadEnter]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player2
@@ -1827,6 +1858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   bulletPrefab: {fileID: 8855464216240417169, guid: 24aee50bc873ba8468fe27e7e54f6b50, type: 3}
+  fireballPrefab: {fileID: 2761522516080790892, guid: a5bddde3027bb7f439a3a772fe3dfd08, type: 3}
   firePoint: {fileID: 2030520757}
 --- !u!1 &1541799775
 GameObject:
