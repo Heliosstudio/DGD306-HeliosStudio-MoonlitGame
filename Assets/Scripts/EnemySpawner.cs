@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject enemyTypeA;  // Klasik düþman prefabý
+    public GameObject enemyTypeB;  // Yeni zorlu düþman prefabý
     public float spawnInterval = 2f;
-    public float minY = -3f;
-    public float maxY = 3f;
-    public float spawnX = 9f;
-
     private float timer = 0f;
 
     void Update()
     {
         timer += Time.deltaTime;
+
         if (timer >= spawnInterval)
         {
             SpawnEnemy();
@@ -22,8 +20,31 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        float yPos = Random.Range(minY, maxY);
-        Vector3 spawnPos = new Vector3(spawnX, yPos, 0);
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = new Vector3(10f, Random.Range(-4f, 4f), 0f);
+        GameObject prefabToSpawn;
+
+        Debug.Log("Current Level: " + GameManager.Instance.currentLevel);
+
+        if (GameManager.Instance != null && GameManager.Instance.currentLevel == 2)
+        {
+            if (Random.value < 0.3f)
+            {
+                prefabToSpawn = enemyTypeB;
+                Debug.Log("Spawn: EnemyTypeB");
+            }
+
+            else
+            {
+                prefabToSpawn = enemyTypeA;
+                Debug.Log("Spawn: EnemyTypeA");
+            }
+        }
+        else
+        {
+            prefabToSpawn = enemyTypeA;
+        }
+
+        Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
     }
+
 }
