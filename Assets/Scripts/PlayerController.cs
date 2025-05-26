@@ -26,7 +26,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().ownerPlayerId = 1; // P1
         }
     }
+
 }

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float verticalRange = 0.5f;
     private float originalY;
     private float timeOffset;
+    private bool isDead = false;
 
     public float dropChance = 0.2f; // %20
     public GameObject healthPickupPrefab; 
@@ -25,24 +26,37 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDead) return;
+
+        if (other.CompareTag("Bullet"))
+        {
+            isDead = true;
+
+            Bullet bullet = other.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                ScoreManager.Instance.AddScore(10, bullet.ownerPlayerId);
+            }
+
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+
         if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            isDead = true;
+
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
+            if (health != null)
             {
-                playerHealth.TakeDamage(1);
+                health.TakeDamage(1);
             }
 
             Destroy(gameObject);
         }
-
-        if (other.CompareTag("Bullet"))
-        {
-            Destroy(other.gameObject);
-            DropHealth();
-            Destroy(gameObject);
-        }
     }
+
+
 
 
     void DropHealth()
