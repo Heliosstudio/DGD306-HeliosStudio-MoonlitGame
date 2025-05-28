@@ -529,6 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   bulletPrefab: {fileID: 8855464216240417169, guid: d3ef02b763ce4884a952cb3947ae0d31, type: 3}
+  iceBlastPrefab: {fileID: 0}
   firePoint: {fileID: 876382991}
 --- !u!61 &313766784
 BoxCollider2D:
@@ -814,11 +815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f766b051409c2bd4194cace303dc5d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7264873369512437772, guid: 94694dbb68fe83f4c9b8eb214607a766, type: 3}
+  enemyTypeA: {fileID: 0}
+  enemyTypeB: {fileID: 0}
   spawnInterval: 2
-  minY: -3
-  maxY: 3
-  spawnX: 9
 --- !u!4 &402343321
 Transform:
   m_ObjectHideFlags: 0
@@ -1185,7 +1184,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957362048}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1261,7 +1260,7 @@ Transform:
   m_GameObject: {fileID: 1048399499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -335.9, y: -235.35, z: 0}
+  m_LocalPosition: {x: -335.9, y: -235.09, z: 0}
   m_LocalScale: {x: 1.0989012, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1914,6 +1913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   bulletPrefab: {fileID: 8855464216240417169, guid: 24aee50bc873ba8468fe27e7e54f6b50, type: 3}
+  fireballPrefab: {fileID: 0}
   firePoint: {fileID: 2030520757}
 --- !u!1 &1541799775
 GameObject:
@@ -2361,7 +2361,7 @@ Transform:
   m_GameObject: {fileID: 1923590928}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -120.42, y: -233.385, z: 0}
+  m_LocalPosition: {x: -120.42, y: -233.13, z: 0}
   m_LocalScale: {x: 1.0989012, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
