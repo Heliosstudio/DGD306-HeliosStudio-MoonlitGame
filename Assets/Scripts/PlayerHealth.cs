@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private bool shieldEnabled = false;
+    public void SetShield(bool v) => shieldEnabled = v;
     public int maxHealth = 10;
     public int currentHealth;
     public Slider healthSlider;
@@ -20,18 +22,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (shieldEnabled) return;        // Shield aktifse hasar yok
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        if (healthSlider != null) healthSlider.value = currentHealth;
 
-        if (healthSlider != null)
-            healthSlider.value = currentHealth;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-
-        Debug.Log(gameObject.name + " hasar aldý: " + currentHealth);
+        if (currentHealth <= 0) Die();
     }
 
 

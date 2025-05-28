@@ -2,25 +2,21 @@ using UnityEngine;
 
 public class Orb : MonoBehaviour
 {
-    public GameObject[] powerUps; // Boost prefablarý
-    public float dropChance = 0.5f; // %50 þans
+    public float boostDuration = 5f;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Bullet"))
-        {
-            Destroy(other.gameObject);
-            TryDropPowerUp();
-            Destroy(gameObject);
-        }
-    }
+        if (!other.CompareTag("Bullet")) return;
 
-    void TryDropPowerUp()
-    {
-        if (Random.value <= dropChance && powerUps.Length > 0)
+        Bullet b = other.GetComponent<Bullet>();
+        if (b != null && PlayerPowerManager.Registry.TryGetValue(b.ownerPlayerId, out var mgr))
         {
-            int randomIndex = Random.Range(0, powerUps.Length);
-            Instantiate(powerUps[randomIndex], transform.position, Quaternion.identity);
+            // Hangi oyuncunun mermisi ise ona Speed + MultiShot
+            mgr.ApplyPowerUp(PowerUp.PowerType.Speed, boostDuration);
+            mgr.ApplyPowerUp(PowerUp.PowerType.MultiShot, boostDuration);
         }
+
+        Destroy(other.gameObject);
+        Destroy(gameObject);
     }
 }

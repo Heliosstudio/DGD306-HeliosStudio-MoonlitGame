@@ -1,33 +1,50 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    [HideInInspector] public float moveSpeed = 5f;
+    private bool multiShotEnabled = false;
+    public void SetMultiShot(bool v) => multiShotEnabled = v;
+
+    [Header("Prefabs & Points")]
     public GameObject bulletPrefab;
-    public GameObject iceBlastPrefab; 
+    public GameObject iceBlastPrefab;
     public Transform firePoint;
 
-    private Vector2 moveInput;
-    private float specialCooldown = 2f;
+    [Header("Special (Ice Blast)")]
+    public float specialCooldown = 2f;
     private float nextSpecialTime = 0f;
+
+    private Vector2 moveInput;
 
     void Update()
     {
+
         transform.Translate(moveInput * moveSpeed * Time.deltaTime);
     }
+
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
     }
 
+
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (!context.performed) return;
+
+
+        if (multiShotEnabled)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().ownerPlayerId = 1;
+            SpawnBullet(firePoint.position + Vector3.up * 0.2f, 1);
+            SpawnBullet(firePoint.position, 1);
+            SpawnBullet(firePoint.position + Vector3.down * 0.2f, 1);
+        }
+        else
+        {
+            SpawnBullet(firePoint.position, 1);
         }
     }
 
@@ -35,15 +52,18 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && Time.time >= nextSpecialTime)
         {
-            UseIceBlast();
+            var blast = Instantiate(iceBlastPrefab, firePoint.position, Quaternion.identity);
+            var b = blast.GetComponent<Bullet>();
+            if (b != null) b.ownerPlayerId = 1;   // P1 olarak işaretle
+
             nextSpecialTime = Time.time + specialCooldown;
         }
     }
 
-    private void UseIceBlast()
+    private void SpawnBullet(Vector3 pos, int ownerId)
     {
-        GameObject blast = Instantiate(iceBlastPrefab, firePoint.position, Quaternion.identity);
-        Bullet bullet = blast.GetComponent<Bullet>();
-        if (bullet != null) bullet.ownerPlayerId = 1;
+        var go = Instantiate(bulletPrefab, pos, Quaternion.identity);
+        var b = go.GetComponent<Bullet>();
+        if (b != null) b.ownerPlayerId = ownerId;
     }
 }
