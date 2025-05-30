@@ -3,26 +3,31 @@ using UnityEngine;
 public class BossBullet : MonoBehaviour
 {
     public float speed = 6f;
-    [HideInInspector] public Vector2 direction;
+    public float lifetime = 5f;     // merminin ekrandan çýkmayý beklemeden ömrü
+
+    void Start()
+    {
+        // lifetime saniye sonra otomatik silinsin
+        Destroy(gameObject, lifetime);
+    }
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        // sabit sola hareket
+        transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Sadece Player ile çarpýþýnca yok et ve hasar ver
         if (other.CompareTag("Player"))
         {
             var health = other.GetComponent<PlayerHealth>();
             if (health != null)
-                health.TakeDamage(2); // boss mermisi 2 can götürsün
+                health.TakeDamage(1);  
+        }
 
+        if (other.CompareTag("Player"))
             Destroy(gameObject);
-        }
-        else if (!other.CompareTag("Orb"))
-        {
-            Destroy(gameObject); // duvara veya baþka objeye çarpýnca sil
-        }
     }
 }

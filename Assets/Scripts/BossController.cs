@@ -66,14 +66,11 @@ public class BossController : MonoBehaviour
         SpawnBossBullet(dirR);
         SpawnBossBullet(dirL);
     }
-
     void SpawnBossBullet(Vector2 _)
     {
-        var b = Instantiate(bossBulletPrefab, firePoint.position, Quaternion.identity)
-                    .GetComponent<BossBullet>();
-        if (b != null)
-            b.direction = Vector2.left;    // Hangi oyuncuya bakarsa baksýn, sola ilerle
+        Instantiate(bossBulletPrefab, firePoint.position, Quaternion.identity);
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
