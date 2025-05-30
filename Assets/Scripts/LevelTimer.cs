@@ -1,33 +1,45 @@
-using UnityEngine;
-using UnityEngine.UI;
+ï»¿using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class LevelTimer : MonoBehaviour
 {
-    [Header("Timer Settings")]
-    public float levelDuration = 60f;          // Level1 süresi (saniye)
+    public TextMeshProUGUI timerText;
     private float remainingTime;
-
-    [Header("UI")]
-    public TextMeshProUGUI timerText;          // Inspector’dan atayacaðýz
+    private bool timerStarted = false;
 
     void Start()
     {
-        remainingTime = levelDuration;
+        StartCoroutine(WaitForValidTime());
+    }
+
+    IEnumerator WaitForValidTime()
+    {
+        // ðŸ”„ Bekle ki GameManager.levelTime doÄŸru dolmuÅŸ olsun
+        while (GameManager.Instance.levelTime <= 0f)
+        {
+            yield return null; // 1 frame bekle
+        }
+
+        remainingTime = GameManager.Instance.levelTime;
+        timerStarted = true;
         UpdateTimerUI();
+
+        Debug.Log($"[LevelTimer] BaÅŸlatÄ±ldÄ±. SÃ¼re: {remainingTime}");
     }
 
     void Update()
     {
-        if (remainingTime <= 0f) return;
+        if (!timerStarted || remainingTime <= 0f)
+            return;
 
-        // Süreyi geri say
         remainingTime -= Time.deltaTime;
+        GameManager.Instance.levelTime = remainingTime;
+
         if (remainingTime <= 0f)
         {
             remainingTime = 0f;
-            // Süre dolunca Level2’ye geç
-            GameManager.Instance?.GoToNextLevel();
+            GameManager.Instance.GoToNextLevel();
         }
 
         UpdateTimerUI();

@@ -51,13 +51,14 @@ public class Player2Controller : MonoBehaviour
     public void OnSpecial(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
-        if (GameManager.Instance.currentLevel < 2) return;
+        if (GameManager.Instance.currentLevelIndex < 3) return;
         if (Time.time < nextSpecialTime) return;
 
         // Fireball instantiate inline:
-        var go = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-        var b = go.GetComponent<Bullet>();
-        if (b != null) b.ownerPlayerId = 2;
+
+        GameObject fb = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+        Vector2 dir = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        fb.GetComponent<Fireball>().SetDirection(dir);
 
         nextSpecialTime = Time.time + specialCooldown;
     }

@@ -4,22 +4,25 @@ public class Fireball : MonoBehaviour
 {
     public float speed = 12f;
     public float lifetime = 5f;
+    private Vector2 direction = Vector2.left; // Varsayılan yön
+
+    public void SetDirection(Vector2 dir)
+    {
+        direction = dir.normalized;
+    }
 
     void Start()
     {
-        // lifetime saniye sonra otomatik silinsin
         Destroy(gameObject, lifetime);
     }
 
     void Update()
     {
-        // Sağdan sola sabit hareket
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Sadece düşmanlara çarptığında hem onları hem de kendini yok et
         if (other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);

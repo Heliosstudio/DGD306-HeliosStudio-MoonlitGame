@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
         Debug.Log("Current Level: " + GameManager.Instance.currentLevel);
 
-        if (GameManager.Instance != null && GameManager.Instance.currentLevel == 2)
+        if (GameManager.Instance.currentLevelIndex == 2)
         {
             if (Random.value < 0.3f)
             {

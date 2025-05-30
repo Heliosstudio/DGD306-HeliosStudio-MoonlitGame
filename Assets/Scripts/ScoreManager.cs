@@ -16,25 +16,25 @@ public class ScoreManager : MonoBehaviour
     // Dýþarýya okunabilir property’ler
     public int P1Score => scoreP1;
     public int P2Score => scoreP2;
+    public static int TotalScore => Instance.scoreP1 + Instance.scoreP2;
 
     void Awake()
     {
-        // Singleton kalýbý
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-
- 
+        DontDestroyOnLoad(gameObject); // Level geçiþlerinde kaybolmaz
+        Debug.Log("ScoreManager initialized and persisted.");
     }
+
 
     void Start()
     {
         UpdateUI();
     }
-
 
     public void AddScore(int amount, int playerId)
     {
@@ -46,7 +46,6 @@ public class ScoreManager : MonoBehaviour
         UpdateUI();
     }
 
- 
     private void UpdateUI()
     {
         if (scoreTextP1 != null)
@@ -54,4 +53,38 @@ public class ScoreManager : MonoBehaviour
         if (scoreTextP2 != null)
             scoreTextP2.text = $"P2 Score: {scoreP2}";
     }
+
+    // High Score kontrolü ve kaydý
+    public void CheckAndSaveHighScore()
+    {
+        int previousHigh = PlayerPrefs.GetInt("HighScore", 0);
+        int currentTotal = TotalScore;
+
+        if (currentTotal > previousHigh)
+        {
+            PlayerPrefs.SetInt("HighScore", currentTotal);
+            PlayerPrefs.Save();
+            Debug.Log($"Yeni High Score: {currentTotal}");
+        }
+        else
+        {
+            Debug.Log($"High Score korunuyor: {previousHigh}");
+        }
+    }
+
+    // High Score'ý al
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("HighScore", 0);
+    }
+
+    // Skorlarý sýfýrla (yeni oyun için)
+    public void ResetScores()
+    {
+        scoreP1 = 0;
+        scoreP2 = 0;
+        UpdateUI();
+    }
+
+
 }

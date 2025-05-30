@@ -1619,7 +1619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfd34a9e7de75d4aad657ab9078da82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelTime: 5
   currentLevel: 1
+  currentLevelIndex: 0
 --- !u!1 &1286543873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,7 +2098,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fc71c208210e94c810e23a5bca5c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDuration: 90
   timerText: {fileID: 1504084189}
 --- !u!1 &1541799775
 GameObject:
