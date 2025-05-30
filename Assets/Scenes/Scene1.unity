@@ -531,6 +531,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8855464216240417169, guid: d3ef02b763ce4884a952cb3947ae0d31, type: 3}
   iceBlastPrefab: {fileID: 0}
   firePoint: {fileID: 876382991}
+  specialCooldown: 2
 --- !u!61 &313766784
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1260,7 +1261,7 @@ Transform:
   m_GameObject: {fileID: 1048399499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -335.9, y: -235.09, z: 0}
+  m_LocalPosition: {x: -334.7, y: -236.612, z: 0}
   m_LocalScale: {x: 1.0989012, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1915,6 +1916,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8855464216240417169, guid: 24aee50bc873ba8468fe27e7e54f6b50, type: 3}
   fireballPrefab: {fileID: 0}
   firePoint: {fileID: 2030520757}
+  specialCooldown: 5
 --- !u!1 &1541799775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,7 +2363,7 @@ Transform:
   m_GameObject: {fileID: 1923590928}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -120.42, y: -233.13, z: 0}
+  m_LocalPosition: {x: -119.2, y: -234.653, z: 0}
   m_LocalScale: {x: 1.0989012, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

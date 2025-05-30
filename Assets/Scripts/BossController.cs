@@ -85,7 +85,6 @@ public class BossController : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        // (Ýstersen bir health bar UI update ekle burada)
 
         if (currentHealth <= 0)
             Die();
