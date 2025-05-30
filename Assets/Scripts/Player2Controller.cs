@@ -48,20 +48,21 @@ public class Player2Controller : MonoBehaviour
         }
     }
 
-
     public void OnSpecial(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time >= nextSpecialTime)
-        {
-            var fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-            var b = fireball.GetComponent<Bullet>();
-            if (b != null) b.ownerPlayerId = 2;  
+        if (!context.performed) return;
+        if (GameManager.Instance.currentLevel < 2) return;
+        if (Time.time < nextSpecialTime) return;
 
-            nextSpecialTime = Time.time + specialCooldown;
-        }
+        // Fireball instantiate inline:
+        var go = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+        var b = go.GetComponent<Bullet>();
+        if (b != null) b.ownerPlayerId = 2;
+
+        nextSpecialTime = Time.time + specialCooldown;
     }
 
-  
+
     private void SpawnBullet(Vector3 pos, int ownerId)
     {
         var go = Instantiate(bulletPrefab, pos, Quaternion.identity);

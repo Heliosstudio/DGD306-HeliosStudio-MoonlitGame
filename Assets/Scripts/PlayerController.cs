@@ -50,15 +50,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnSpecial(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time >= nextSpecialTime)
-        {
-            var blast = Instantiate(iceBlastPrefab, firePoint.position, Quaternion.identity);
-            var b = blast.GetComponent<Bullet>();
-            if (b != null) b.ownerPlayerId = 1;   // P1 olarak işaretle
+        if (!context.performed) return;
+        if (GameManager.Instance.currentLevel < 2) return;
+        if (Time.time < nextSpecialTime) return;
 
-            nextSpecialTime = Time.time + specialCooldown;
-        }
+        // IceBlast instantiate
+        var go = Instantiate(iceBlastPrefab, firePoint.position, Quaternion.identity);
+        var b = go.GetComponent<Bullet>();
+        if (b != null) b.ownerPlayerId = 1;
+
+        nextSpecialTime = Time.time + specialCooldown;
     }
+
 
     private void SpawnBullet(Vector3 pos, int ownerId)
     {

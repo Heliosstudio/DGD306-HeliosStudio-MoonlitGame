@@ -36,7 +36,7 @@ public class EnemyTypeB : MonoBehaviour
             if (bullet != null)
             {
                 ScoreManager.Instance.AddScore(20, bullet.ownerPlayerId); // Daha çok puan!
-                GameManager.Instance?.OnEnemyKilled();
+
             }
 
             Destroy(other.gameObject);

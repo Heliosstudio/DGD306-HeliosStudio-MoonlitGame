@@ -1,12 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Tooltip("1-based level index; starts at 1 for Scene1")]
     public int currentLevel = 1;
-    public int enemiesKilled = 0;
-    public int enemiesToKillForNextLevel = 10;
 
     void Awake()
     {
@@ -15,33 +15,39 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Sahne geçiþinde kaybolmaz
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void OnEnemyKilled()
+    /// <summary>
+    /// Timer dolunca çaðrýlacak.
+    /// </summary>
+    public void GoToNextLevel()
     {
-        enemiesKilled++;
-
-        if (enemiesKilled >= enemiesToKillForNextLevel)
-        {
-            GoToNextLevel();
-        }
-    }
-
-    void GoToNextLevel()
-    {
-        enemiesKilled = 0;
         currentLevel++;
+        string nextScene = "";
 
-        if (currentLevel == 2)
+        switch (currentLevel)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Level2");
+            case 1:
+                nextScene = "Scene1"; break;
+            case 2:
+                nextScene = "Scene2"; break;
+            case 3:
+                nextScene = "Scene3"; break;
+            default:
+                Debug.LogWarning($"No scene mapped for level {currentLevel}, restarting.");
+                RestartLevel();
+                return;
         }
-        else if (currentLevel == 3)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("BossScene");
-        }
+
+        SceneManager.LoadScene(nextScene);
+    }
+
+
+    public void RestartLevel()
+    {
+        string sceneName = $"Scene{currentLevel}";
+        SceneManager.LoadScene(sceneName);
     }
 }
