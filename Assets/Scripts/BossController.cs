@@ -92,8 +92,14 @@ public class BossController : MonoBehaviour
 
     void Die()
     {
-        // Örneðin WinScene’e geç
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(1000, 1);
+            ScoreManager.Instance.AddScore(1000, 2);
+        }
+
         SceneManager.LoadScene("WinScene");
+
         Destroy(gameObject);
     }
 }
