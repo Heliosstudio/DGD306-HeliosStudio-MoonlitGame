@@ -1459,7 +1459,6 @@ MonoBehaviour:
   - {fileID: 316328250}
   - {fileID: 468051938}
   - {fileID: 1438882454}
-  - {fileID: 986375654}
 --- !u!114 &702738274 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8527850042161810520, guid: 58c14343f659d80449cac7bbac3ffb6d, type: 3}
