@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -8,12 +11,14 @@ public class PauseMenu : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject pausePanel;
+    public Button resumeButton;
 
     private bool isPaused = false;
 
 #if ENABLE_INPUT_SYSTEM
     private PlayerInput playerInput;
     private System.Action<InputAction.CallbackContext> pauseHandler;
+    private string previousActionMap; // 🔁 Geri dönmek için
 #endif
 
     void Awake()
@@ -22,7 +27,7 @@ public class PauseMenu : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
         {
-            pauseHandler = ctx => TogglePause(); // ✅ referansı tuttuğumuz handler
+            pauseHandler = ctx => TogglePause();
             playerInput.actions["Pause"].performed += pauseHandler;
         }
 #endif
@@ -30,9 +35,39 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        // Eğer pausePanel sahne içinde yoksa tag ile bulmaya çalış
+        if (pausePanel == null)
+        {
+            var found = GameObject.FindWithTag("PausePanel");
+            if (found != null)
+            {
+                pausePanel = found;
+                Debug.Log("PausePanel sahnede otomatik bulundu.");
+            }
+            else
+            {
+                Debug.LogWarning("PausePanel sahnede bulunamadı.");
+            }
+        }
+
+        if (resumeButton == null)
+        {
+            var btnObj = GameObject.FindWithTag("ResumeButton");
+            if (btnObj != null)
+            {
+                resumeButton = btnObj.GetComponent<Button>();
+                Debug.Log("ResumeButton sahnede otomatik bulundu.");
+            }
+            else
+            {
+                Debug.LogWarning("ResumeButton sahnede bulunamadı.");
+            }
+        }
+
         if (pausePanel != null)
-            pausePanel.SetActive(false); // Sahne başında panel gizli başlasın
+            pausePanel.SetActive(false);
     }
+
 
     void OnDestroy()
     {
@@ -49,13 +84,11 @@ public class PauseMenu : MonoBehaviour
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            Debug.Log("ESC basıldı!");
             TogglePause();
         }
 #else
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESC basıldı!");
             TogglePause();
         }
 #endif
@@ -74,6 +107,15 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+
+#if ENABLE_INPUT_SYSTEM
+        if (playerInput != null && !string.IsNullOrEmpty(previousActionMap))
+        {
+            playerInput.SwitchCurrentActionMap(previousActionMap);
+        }
+#endif
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void PauseGame()
@@ -81,6 +123,29 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+
+#if ENABLE_INPUT_SYSTEM
+        if (playerInput != null)
+        {
+            previousActionMap = playerInput.currentActionMap.name;
+            playerInput.SwitchCurrentActionMap("UI");
+        }
+#endif
+
+        if (resumeButton == null)
+        {
+            Debug.LogWarning("❌ Resume Button NULL!");
+        }
+        else if (!resumeButton.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("❌ Resume Button aktif değil!");
+        }
+        else
+        {
+            Debug.Log("✅ Resume Button seçiliyor...");
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+        }
     }
 
     public void LoadMainMenu()

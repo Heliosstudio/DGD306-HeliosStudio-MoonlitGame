@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class GameUIVisibility : MonoBehaviour
 {
+    [Header("UI Elemanlarý")]
+    public GameObject[] uiElementsToToggle; // HealthBar, ScoreText, TimerText, PausePanel vb.
+
     void OnEnable()
     {
-        // Mevcut açýk sahnede görünürlüðü ayarla ve sonrasýnda gelecekteki tüm sahne yüklemelerine abone ol
-        UpdateVisibility(SceneManager.GetActiveScene());
         SceneManager.sceneLoaded += OnSceneLoaded;
+        UpdateVisibility(SceneManager.GetActiveScene());
     }
 
     void OnDisable()
@@ -22,10 +24,12 @@ public class GameUIVisibility : MonoBehaviour
 
     void UpdateVisibility(Scene scene)
     {
-        // Oynama sahneleri, örneðin:
-        if (scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3")
-            gameObject.SetActive(true);
-        else
-            gameObject.SetActive(false);
+        bool show = scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3";
+
+        foreach (var ui in uiElementsToToggle)
+        {
+            if (ui != null)
+                ui.SetActive(show);
+        }
     }
 }

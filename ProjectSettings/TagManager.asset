@@ -10,6 +10,8 @@ TagManager:
   - HealthSlider
   - HealthSliderP1
   - HealthSliderP2
+  - PausePanel
+  - ResumeButton
   layers:
   - Default
   - TransparentFX
