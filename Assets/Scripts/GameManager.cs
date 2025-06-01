@@ -39,9 +39,9 @@ public class GameManager : MonoBehaviour
         // Sahnenin adına göre levelTime ataması:
         switch (scene.name)
         {
-            case "Scene1": levelTime = 4f; break;
-            case "Scene2": levelTime = 4f; break;
-            case "Scene3": levelTime = 50f; break;
+            case "Scene1": levelTime = 90f; break;
+            case "Scene2": levelTime = 120f; break;
+            case "Scene3": levelTime = 150f; break;
             default: levelTime = 0f; break;
         }
 
