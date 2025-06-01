@@ -616,7 +616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 10
-  healthSlider: {fileID: 1560419278}
+  sliderTag: HealthSliderP1
 --- !u!1 &316328250
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 316328252}
   m_Layer: 5
   m_Name: HealthBar (1)
-  m_TagString: Untagged
+  m_TagString: HealthSliderP2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 10
-  healthSlider: {fileID: 316328252}
+  sliderTag: HealthSliderP2
 --- !u!95 &1286543875
 Animator:
   serializedVersion: 7
@@ -2397,7 +2397,7 @@ GameObject:
   - component: {fileID: 1560419278}
   m_Layer: 5
   m_Name: HealthBar
-  m_TagString: Untagged
+  m_TagString: HealthSliderP1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -10,7 +10,7 @@ public class LevelTimer : MonoBehaviour
 
     void OnEnable()
     {
-        // Sahne yüklendiğinde Timer'ı ayağa kaldıracak metodu ekle
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -22,7 +22,7 @@ public class LevelTimer : MonoBehaviour
     // Scene yüklendiğinde tetiklenen metod
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // GameManager'in levelTime'ı burada zaten set edilmiş olacak
+
         remainingTime = GameManager.Instance.levelTime;
         timerStarted = true;
         UpdateTimerUI();
@@ -36,15 +36,32 @@ public class LevelTimer : MonoBehaviour
             return;
 
         remainingTime -= Time.deltaTime;
-        GameManager.Instance.levelTime = remainingTime; // istersen kaydedebilirsin
+        GameManager.Instance.levelTime = remainingTime; 
 
         if (remainingTime <= 0f)
         {
             remainingTime = 0f;
-            GameManager.Instance.GoToNextLevel();
+            HandleTimeout();  
         }
 
         UpdateTimerUI();
+    }
+
+    void HandleTimeout()
+    {
+
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName == "Scene3")
+        {
+
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+
+            GameManager.Instance.GoToNextLevel();
+        }
     }
 
     void UpdateTimerUI()
