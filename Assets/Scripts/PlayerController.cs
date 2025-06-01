@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public void OnSpecial(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
-        if (GameManager.Instance.currentLevelIndex < 3) return;
+        if (GameManager.Instance.currentLevelIndex < 2) return;
         if (Time.time < nextSpecialTime) return;
 
         // IceBlast instantiate

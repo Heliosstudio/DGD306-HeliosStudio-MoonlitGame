@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
-using System.Collections;
 
 public class LevelTimer : MonoBehaviour
 {
@@ -8,24 +8,26 @@ public class LevelTimer : MonoBehaviour
     private float remainingTime;
     private bool timerStarted = false;
 
-    void Start()
+    void OnEnable()
     {
-        StartCoroutine(WaitForValidTime());
+        // Sahne yüklendiğinde Timer'ı ayağa kaldıracak metodu ekle
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    IEnumerator WaitForValidTime()
+    void OnDisable()
     {
-        // 🔄 Bekle ki GameManager.levelTime doğru dolmuş olsun
-        while (GameManager.Instance.levelTime <= 0f)
-        {
-            yield return null; // 1 frame bekle
-        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
+    // Scene yüklendiğinde tetiklenen metod
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // GameManager'in levelTime'ı burada zaten set edilmiş olacak
         remainingTime = GameManager.Instance.levelTime;
         timerStarted = true;
         UpdateTimerUI();
 
-        Debug.Log($"[LevelTimer] Başlatıldı. Süre: {remainingTime}");
+        Debug.Log($"[LevelTimer] Sahne yüklendi: {scene.name}. Kalan süre: {remainingTime}");
     }
 
     void Update()
@@ -34,7 +36,7 @@ public class LevelTimer : MonoBehaviour
             return;
 
         remainingTime -= Time.deltaTime;
-        GameManager.Instance.levelTime = remainingTime;
+        GameManager.Instance.levelTime = remainingTime; // istersen kaydedebilirsin
 
         if (remainingTime <= 0f)
         {

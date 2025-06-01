@@ -5,68 +5,57 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public float levelTime;           // Her levelin süresi (LevelTimer kullanır)
-    public string currentLevel;       // Aktif sahnenin adı
-    public int currentLevelIndex;     // Aktif sahnenin index'i
+    public float levelTime;           // O andan bir önceki sahneden gelen, ya da SetTimeForScene ile ayarlanacak
+    public string currentLevel;       // Örneğin "Scene1", "Scene2"…
+    public int currentLevelIndex;
 
     void Awake()
     {
-        Debug.Log($"[GameManager] Awake çalıştı: {this.GetHashCode()}");
-
         if (Instance != null && Instance != this)
         {
-            Debug.Log("İkinci bir GameManager bulundu, silindi.");
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // İlk açılışta (örneğin MainMenu’den start’a basılırken) 
+        // eğer doğrudan Scene1 yükleniyorsa, levelTime ayarlansın:
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    // Sahne yüklendiğinde tetiklenir
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currentLevel = scene.name;
         currentLevelIndex = scene.buildIndex;
 
-        SetTimeForScene(currentLevel); // Süreyi ayarla
-        Debug.Log($"[GameManager] {currentLevel} sahnesi yüklendi. Süre: {levelTime} saniye");
-    }
-
-    // Sahne adına göre süre belirle
-    public void SetTimeForScene(string sceneName)
-    {
-        switch (sceneName)
+        // Sahnenin adına göre levelTime ataması:
+        switch (scene.name)
         {
-            case "Scene1":
-                levelTime = 10f;
-                break;
-            case "Scene2":
-                levelTime = 12f;
-                break;
-            case "Scene3":
-                levelTime = 15f;
-                break;
-            default:
-                levelTime = 60f;
-                break;
+            case "Scene1": levelTime = 4f; break;
+            case "Scene2": levelTime = 4f; break;
+            case "Scene3": levelTime = 50f; break;
+            default: levelTime = 0f; break;
         }
+
+        Debug.Log($"[GameManager] OnSceneLoaded → {scene.name}, levelTime = {levelTime}");
     }
 
-    // Bir sonraki level'a geç
     public void GoToNextLevel()
     {
-        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
+        int nextIndex = currentLevelIndex + 1;
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextIndex);
         }
         else
         {
-            Debug.Log("Oyun bitti!");
-            // Buraya WinScene yükleme veya ana menüye dönüş eklenebilir
+            Debug.Log("[GameManager] Son level tamamlandı.");
         }
     }
 }

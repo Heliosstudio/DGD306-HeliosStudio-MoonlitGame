@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fc71c208210e94c810e23a5bca5c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 182317003}
+  timerText: {fileID: 303392124}
 --- !u!114 &303392124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2000,7 +2000,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8855464216240417169, guid: 24aee50bc873ba8468fe27e7e54f6b50, type: 3}
   fireballPrefab: {fileID: 2761522516080790892, guid: a5bddde3027bb7f439a3a772fe3dfd08, type: 3}
   firePoint: {fileID: 2030520757}
-  specialCooldown: 5
+  specialCooldown: 3
 --- !u!1 &1541799775
 GameObject:
   m_ObjectHideFlags: 0

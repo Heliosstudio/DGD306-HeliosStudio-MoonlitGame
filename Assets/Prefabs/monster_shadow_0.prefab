@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d7f97a78690b54089712804a6154a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 7
   verticalSpeed: 3
   verticalRange: 1
   healthPickupPrefab: {fileID: 6375324426892844712, guid: 5a83a0a08d9ac8e4fa2434d63fcc17e6, type: 3}

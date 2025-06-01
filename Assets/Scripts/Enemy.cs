@@ -5,10 +5,12 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 2f;
     public float verticalSpeed = 1f;
     public float verticalRange = 0.5f;
-    public int maxHealth = 1;            // A türü için 1 can yeterli
-    public int scoreValue = 10;          // Öldüðünde verilecek puan
-    private int currentHealth;
 
+    [Tooltip("Bu düþman 2 vuruþta ölsün")]
+    public int maxHealth = 2;
+    public int scoreValue = 10;
+
+    private int currentHealth;
     private float originalY;
     private float timeOffset;
 
@@ -29,21 +31,32 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            // Puan ekle
+            // Hasar uygula
+            currentHealth--;
+
+            // Mermiyi yok et
+            Destroy(other.gameObject);
+
+            // Eðer hâlâ yaþýyorsa hiçbir þey yapma
+            if (currentHealth > 0)
+                return;
+
+            // Öldü: puan ekle
             var b = other.GetComponent<Bullet>();
             if (b != null)
                 ScoreManager.Instance.AddScore(scoreValue, b.ownerPlayerId);
 
-            Destroy(other.gameObject);
+            // Düþmaný yok et
             Destroy(gameObject);
         }
-
-        if (other.CompareTag("Player"))
+        else if (other.CompareTag("Player"))
         {
+            // Oyuncuya temasta bir can eksilt
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
                 health.TakeDamage(1);
 
+            // Düþman oyuncuya çarptýðýnda anýnda yok olsun
             Destroy(gameObject);
         }
     }
