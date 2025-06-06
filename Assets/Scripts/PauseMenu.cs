@@ -18,7 +18,8 @@ public class PauseMenu : MonoBehaviour
 #if ENABLE_INPUT_SYSTEM
     private PlayerInput playerInput;
     private System.Action<InputAction.CallbackContext> pauseHandler;
-    private string previousActionMap; // 🔁 Geri dönmek için
+    private string previousActionMap;
+    private InputAction escListener; // 🔑 ESC için global dinleyici
 #endif
 
     void Awake()
@@ -30,12 +31,16 @@ public class PauseMenu : MonoBehaviour
             pauseHandler = ctx => TogglePause();
             playerInput.actions["Pause"].performed += pauseHandler;
         }
+
+        // 🎯 ESC tuşunu her zaman dinle
+        escListener = new InputAction(binding: "<Keyboard>/escape");
+        escListener.performed += ctx => TogglePause();
+        escListener.Enable();
 #endif
     }
 
     void Start()
     {
-        // Eğer pausePanel sahne içinde yoksa tag ile bulmaya çalış
         if (pausePanel == null)
         {
             var found = GameObject.FindWithTag("PausePanel");
@@ -68,7 +73,6 @@ public class PauseMenu : MonoBehaviour
             pausePanel.SetActive(false);
     }
 
-
     void OnDestroy()
     {
 #if ENABLE_INPUT_SYSTEM
@@ -76,20 +80,12 @@ public class PauseMenu : MonoBehaviour
         {
             playerInput.actions["Pause"].performed -= pauseHandler;
         }
-#endif
-    }
 
-    void Update()
-    {
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        // ❌ ESC listener'ı kaldır
+        if (escListener != null)
         {
-            TogglePause();
-        }
-#else
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
+            escListener.Disable();
+            escListener.Dispose();
         }
 #endif
     }

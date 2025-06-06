@@ -21,7 +21,7 @@ public class OrbSpawner : MonoBehaviour
     void SpawnOrb()
     {
         float randomY = Random.Range(-spawnRangeY, spawnRangeY);
-        Vector3 spawnPos = new Vector3(10f, randomY, 0f); 
+        Vector3 spawnPos = new Vector3(4f, randomY, 0f); 
         Instantiate(orbPrefab, spawnPos, Quaternion.identity);
     }
 }

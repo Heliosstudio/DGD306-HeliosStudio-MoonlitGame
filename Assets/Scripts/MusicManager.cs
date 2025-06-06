@@ -1,10 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip gameplayMusic;
+    public AudioClip bossMusic; // ðŸŽµ Yeni eklenen boss mÃ¼ziÄŸi
 
     private void Awake()
     {
@@ -29,19 +30,27 @@ public class MusicManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3")
+        if (scene.name == "Scene1" || scene.name == "Scene2")
         {
-            if (!audioSource.isPlaying)
-            {
-                audioSource.clip = gameplayMusic;
-                audioSource.loop = true;
-                audioSource.Play();
-            }
+            PlayMusic(gameplayMusic);
+        }
+        else if (scene.name == "Scene3")
+        {
+            PlayMusic(bossMusic);
         }
         else
         {
-            // Menü sahnelerinde müziði durdur
             audioSource.Stop();
         }
+    }
+
+    private void PlayMusic(AudioClip clip)
+    {
+        if (audioSource.clip == clip && audioSource.isPlaying) return;
+
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 }

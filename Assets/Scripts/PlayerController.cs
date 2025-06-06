@@ -16,25 +16,41 @@ public class PlayerController : MonoBehaviour
     public float specialCooldown = 2f;
     private float nextSpecialTime = 0f;
 
+    [Header("Audio")]
+    public AudioClip fireSound;
+    private AudioSource audioSource;
+
     private Vector2 moveInput;
+    public Vector2 Border1, Border2;
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        Border1.x = ((float)Screen.width / Screen.height) * Border1.y;
+        Border2.x = ((float)Screen.width / Screen.height) * Border2.y;
+    }
 
     void Update()
     {
-
-        transform.Translate(moveInput * moveSpeed * Time.deltaTime);
+        float playerX_ = transform.position.x + (moveInput * moveSpeed * Time.deltaTime).x;
+        float playerY_ = transform.position.y + (moveInput * moveSpeed * Time.deltaTime).y;
+        if (!(Border1.x >= playerX_ || Border2.x <= playerX_))//herhangi bir sınırı aşıp aşmadığını kontrol ediyor her koordinatına baka baka
+        {
+            transform.Translate(Vector2.right * (moveInput.x * moveSpeed * Time.deltaTime));
+        }
+        if (!(Border2.y <= playerY_ || Border1.y >= playerY_))
+        {
+            transform.Translate(Vector2.up * (moveInput.y * moveSpeed * Time.deltaTime));
+        }
     }
-
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
     }
 
-
     public void OnFire(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
-
 
         if (multiShotEnabled)
         {
@@ -54,7 +70,6 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.currentLevelIndex < 2) return;
         if (Time.time < nextSpecialTime) return;
 
-        // IceBlast instantiate
         var go = Instantiate(iceBlastPrefab, firePoint.position, Quaternion.identity);
         var b = go.GetComponent<Bullet>();
         if (b != null) b.ownerPlayerId = 1;
@@ -62,11 +77,16 @@ public class PlayerController : MonoBehaviour
         nextSpecialTime = Time.time + specialCooldown;
     }
 
-
     private void SpawnBullet(Vector3 pos, int ownerId)
     {
         var go = Instantiate(bulletPrefab, pos, Quaternion.identity);
         var b = go.GetComponent<Bullet>();
         if (b != null) b.ownerPlayerId = ownerId;
+
+        // 🔊 Ateş sesi çal
+        if (fireSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
     }
 }

@@ -19,10 +19,15 @@ public class BossController : MonoBehaviour
     public float fireRate = 2f;
     private float nextFireTime = 0f;
 
+    [Header("Audio")]
+    public AudioClip fireSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         currentHealth = maxHealth;
         originalY = transform.position.y;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -69,6 +74,10 @@ public class BossController : MonoBehaviour
     void SpawnBossBullet(Vector2 _)
     {
         Instantiate(bossBulletPrefab, firePoint.position, Quaternion.identity);
+        if (fireSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
     }
 
 

@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         if (playersAlive <= 0)
         {
             // İki oyuncu da öldü → Ana menüye dön
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("LostScene");
         }
     }
 }
