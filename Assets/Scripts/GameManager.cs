@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public string currentLevel;       // Örneğin "Scene1", "Scene2"…
     public int currentLevelIndex;
 
-    // ► Yeni eklenen kısım: Kaç oyuncu hayatta?
     private int playersAlive = 2;
 
     void Awake()
@@ -22,7 +21,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Sahne yüklendiğinde OnSceneLoaded tetiklenir
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -36,7 +34,6 @@ public class GameManager : MonoBehaviour
         currentLevel = scene.name;
         currentLevelIndex = scene.buildIndex;
 
-        // Sahnenin adına göre levelTime ataması:
         switch (scene.name)
         {
             case "Scene1": levelTime = 90f; break;
@@ -45,7 +42,6 @@ public class GameManager : MonoBehaviour
             default: levelTime = 0f; break;
         }
 
-        // Oyun sahnesindeysek hayatta oyuncu sayısını sıfırla
         if (scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3")
         {
             playersAlive = 2;
@@ -67,15 +63,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ► Yeni eklenen metot: Bir oyuncu öldüğünde çağrılır
     public void OnPlayerDied()
     {
         playersAlive--;
         Debug.Log($"[GameManager] Bir oyuncu öldü. Kalan oyuncu sayısı = {playersAlive}");
         if (playersAlive <= 0)
-        {
-            // İki oyuncu da öldü → Ana menüye dön
+
             SceneManager.LoadScene("LostScene");
-        }
     }
 }
+

@@ -19,7 +19,6 @@ public class LevelTimer : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Scene yüklendiğinde tetiklenen metod
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 

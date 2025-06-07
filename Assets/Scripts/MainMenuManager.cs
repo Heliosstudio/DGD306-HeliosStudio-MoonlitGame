@@ -5,17 +5,17 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Scene1"); // Level1 sahnesine geçiþ
+        SceneManager.LoadScene("Scene1");
     }
 
     public void ShowCredits()
     {
-        SceneManager.LoadScene("Credits"); // Credits sahnesi
+        SceneManager.LoadScene("Credits");
     }
 
     public void QuitGame()
     {
-        Application.Quit(); // Sadece build'de çalýþýr
+        Application.Quit();
         Debug.Log("Oyun kapatýlýyor...");
     }
 }

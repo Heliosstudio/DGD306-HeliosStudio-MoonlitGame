@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
     private PlayerInput playerInput;
     private System.Action<InputAction.CallbackContext> pauseHandler;
     private string previousActionMap;
-    private InputAction escListener; // 🔑 ESC için global dinleyici
+    private InputAction escListener;
 #endif
 
     void Awake()
@@ -32,7 +32,6 @@ public class PauseMenu : MonoBehaviour
             playerInput.actions["Pause"].performed += pauseHandler;
         }
 
-        // 🎯 ESC tuşunu her zaman dinle
         escListener = new InputAction(binding: "<Keyboard>/escape");
         escListener.performed += ctx => TogglePause();
         escListener.Enable();
@@ -81,7 +80,6 @@ public class PauseMenu : MonoBehaviour
             playerInput.actions["Pause"].performed -= pauseHandler;
         }
 
-        // ❌ ESC listener'ı kaldır
         if (escListener != null)
         {
             escListener.Disable();

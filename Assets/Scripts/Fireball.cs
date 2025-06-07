@@ -4,7 +4,7 @@ public class Fireball : MonoBehaviour
 {
     public float speed = 12f;
     public float lifetime = 5f;
-    private Vector2 direction = Vector2.left; // Varsayılan yön
+    private Vector2 direction = Vector2.left; 
 
     public void SetDirection(Vector2 dir)
     {

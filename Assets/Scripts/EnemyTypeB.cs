@@ -35,7 +35,7 @@ public class EnemyTypeB : MonoBehaviour
             Bullet bullet = other.GetComponent<Bullet>();
             if (bullet != null)
             {
-                ScoreManager.Instance.AddScore(20, bullet.ownerPlayerId); // Daha çok puan!
+                ScoreManager.Instance.AddScore(20, bullet.ownerPlayerId);
 
             }
 
@@ -51,7 +51,7 @@ public class EnemyTypeB : MonoBehaviour
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(2); // Daha fazla hasar
+                playerHealth.TakeDamage(2);
             }
 
             Destroy(gameObject);

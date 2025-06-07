@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -20,7 +19,6 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -39,17 +37,14 @@ public class UIManager : MonoBehaviour
             if (gameUIInstance == null)
             {
                 gameUIInstance = Instantiate(gameUIPrefab);
-
             }
             else
             {
-
                 gameUIInstance.SetActive(true);
             }
         }
         else
         {
-
             if (gameUIInstance != null)
                 gameUIInstance.SetActive(false);
         }

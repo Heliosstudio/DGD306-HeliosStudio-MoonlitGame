@@ -29,7 +29,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        // Sahne açıldığında slider referansını ayarla ve canı doldur
         AssignSlider();
         currentHealth = maxHealth;
         UpdateHealthUI();
@@ -61,10 +60,8 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} öldü!");
 
-        // Bu oyuncu nesnesini yok et
         Destroy(gameObject);
 
-        // GameManager’a oyuncunun öldüğünü bildir
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnPlayerDied();
@@ -73,10 +70,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Her sahne yüklendiğinde slider referansını tazele
         AssignSlider();
 
-        // Eğer oyun sahnesiyse, canı tamamen doldur
         if (scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3")
         {
             currentHealth = maxHealth;

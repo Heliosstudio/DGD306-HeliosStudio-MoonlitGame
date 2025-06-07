@@ -31,32 +31,20 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            // Hasar uygula
             currentHealth--;
-
-            // Mermiyi yok et
             Destroy(other.gameObject);
-
-            // Eðer hâlâ yaþýyorsa hiçbir þey yapma
             if (currentHealth > 0)
                 return;
-
-            // Öldü: puan ekle
             var b = other.GetComponent<Bullet>();
             if (b != null)
                 ScoreManager.Instance.AddScore(scoreValue, b.ownerPlayerId);
-
-            // Düþmaný yok et
             Destroy(gameObject);
         }
         else if (other.CompareTag("Player"))
         {
-            // Oyuncuya temasta bir can eksilt
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
                 health.TakeDamage(1);
-
-            // Düþman oyuncuya çarptýðýnda anýnda yok olsun
             Destroy(gameObject);
         }
     }

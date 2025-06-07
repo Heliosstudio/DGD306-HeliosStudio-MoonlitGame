@@ -5,7 +5,7 @@ public class MusicManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip gameplayMusic;
-    public AudioClip bossMusic; // 🎵 Yeni eklenen boss müziği
+    public AudioClip bossMusic;
 
     private void Awake()
     {

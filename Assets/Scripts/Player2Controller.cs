@@ -25,16 +25,18 @@ public class Player2Controller : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        Border1.x = ((float)Screen.width / Screen.height) * Border1.y;
-        Border2.x = ((float)Screen.width / Screen.height) * Border2.y;
+        //ekran oranına göre borderX
+        Border1.x = (float)Screen.width / Screen.height * Border1.y;
+        Border2.x = (float)Screen.width / Screen.height * Border2.y;
     }
 
 
     void Update()
     {
+        #region BorderControl
         float playerX_ = transform.position.x + (moveInput * moveSpeed * Time.deltaTime).x;
         float playerY_ = transform.position.y + (moveInput * moveSpeed * Time.deltaTime).y;
-        if (!(Border1.x >= playerX_ || Border2.x <= playerX_))//herhangi bir sınırı aşıp aşmadığını kontrol ediyor her koordinatına baka baka
+        if (!(Border1.x >= playerX_ || Border2.x <= playerX_))
         {
             transform.Translate(Vector2.right * (moveInput.x * moveSpeed * Time.deltaTime));
         }
@@ -42,6 +44,7 @@ public class Player2Controller : MonoBehaviour
         {
             transform.Translate(Vector2.up * (moveInput.y * moveSpeed * Time.deltaTime));
         }
+        #endregion
     }
 
 

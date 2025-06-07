@@ -3,13 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class WinMenuManager : MonoBehaviour
 {
-    // Main Menu’e dön
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
 
-    // High Scores sahnesini göster ve skorlarý kaydet
     public void ShowHighScores()
     {
         int p1 = ScoreManager.Instance.P1Score;
@@ -31,11 +29,9 @@ public class WinMenuManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        // HighScores sahnesine geç
         SceneManager.LoadScene("HighScoresScene");
     }
 
-    // Oyunu kapat
     public void QuitGame()
     {
         Application.Quit();

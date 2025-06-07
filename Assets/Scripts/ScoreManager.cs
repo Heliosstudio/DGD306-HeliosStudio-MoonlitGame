@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Level geçiþlerinde kaybolmaz
+        DontDestroyOnLoad(gameObject);
         Debug.Log("ScoreManager initialized and persisted.");
     }
 
@@ -53,8 +53,6 @@ public class ScoreManager : MonoBehaviour
         if (scoreTextP2 != null)
             scoreTextP2.text = $"P2 Score: {scoreP2}";
     }
-
-    // High Score kontrolü ve kaydý
     public void CheckAndSaveHighScore()
     {
         int previousHigh = PlayerPrefs.GetInt("HighScore", 0);
@@ -71,14 +69,10 @@ public class ScoreManager : MonoBehaviour
             Debug.Log($"High Score korunuyor: {previousHigh}");
         }
     }
-
-    // High Score'ý al
     public int GetHighScore()
     {
         return PlayerPrefs.GetInt("HighScore", 0);
     }
-
-    // Skorlarý sýfýrla (yeni oyun için)
     public void ResetScores()
     {
         scoreP1 = 0;
