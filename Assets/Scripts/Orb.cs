@@ -12,6 +12,7 @@ public class Orb : MonoBehaviour
         if (b != null && PlayerPowerManager.Registry.TryGetValue(b.ownerPlayerId, out var mgr))
         {
             // Hangi oyuncunun mermisi ise ona Speed + MultiShot
+            print("PowerUp");
             mgr.ApplyPowerUp(PowerUp.PowerType.Speed, boostDuration);
             mgr.ApplyPowerUp(PowerUp.PowerType.MultiShot, boostDuration);
         }

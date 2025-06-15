@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player2Controller : MonoBehaviour
 {
-    [HideInInspector] public float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     private bool multiShotEnabled = false;
     public void SetMultiShot(bool v) => multiShotEnabled = v;
 
@@ -79,8 +79,6 @@ public class Player2Controller : MonoBehaviour
         // Fireball instantiate inline:
 
         GameObject fb = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-        Vector2 dir = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        fb.GetComponent<Fireball>().SetDirection(dir);
 
         nextSpecialTime = Time.time + specialCooldown;
     }
@@ -90,7 +88,6 @@ public class Player2Controller : MonoBehaviour
     {
         var go = Instantiate(bulletPrefab, pos, Quaternion.identity);
         var b = go.GetComponent<Bullet>();
-        if (b != null) b.ownerPlayerId = ownerId;
         if (fireSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(fireSound);

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [HideInInspector] public float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     private bool multiShotEnabled = false;
     public void SetMultiShot(bool v) => multiShotEnabled = v;
 

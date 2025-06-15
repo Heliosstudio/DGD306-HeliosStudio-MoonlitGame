@@ -13,6 +13,16 @@ public class Enemy : MonoBehaviour
     private int currentHealth;
     private float originalY;
     private float timeOffset;
+    [Header("HealthDrop")]
+    public GameObject healthPickupPrefab;
+    public float dropChance;
+    void DropHealth()
+    {
+        if (Random.value <= dropChance && healthPickupPrefab != null)
+        {
+            Instantiate(healthPickupPrefab, transform.position, Quaternion.identity);
+        }
+    }
 
     void Start()
     {
@@ -31,14 +41,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            currentHealth--;
+            Bullet bulScript = other.GetComponent<Bullet>();
+            TakeDamage(bulScript.damage, bulScript.ownerPlayerId);
+            getSlow(bulScript.freezeAmount);
             Destroy(other.gameObject);
-            if (currentHealth > 0)
-                return;
-            var b = other.GetComponent<Bullet>();
-            if (b != null)
-                ScoreManager.Instance.AddScore(scoreValue, b.ownerPlayerId);
-            Destroy(gameObject);
         }
         else if (other.CompareTag("Player"))
         {
@@ -47,5 +53,14 @@ public class Enemy : MonoBehaviour
                 health.TakeDamage(1);
             Destroy(gameObject);
         }
+    }
+    void TakeDamage(int Damage,int bulletPlayer)
+    {
+        currentHealth -= Damage;
+        if (currentHealth <= 0) { DropHealth(); Destroy(gameObject); ScoreManager.Instance.AddScore(scoreValue, bulletPlayer); }
+    }
+    void getSlow(float freezeAmount)
+    {
+        moveSpeed *= freezeAmount;
     }
 }

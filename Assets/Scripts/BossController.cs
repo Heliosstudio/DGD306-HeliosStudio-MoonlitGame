@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Collections;
 
 public class BossController : MonoBehaviour
 {
@@ -83,11 +84,12 @@ public class BossController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Oyuncu mermisi
         if (other.CompareTag("Bullet"))
         {
+            Bullet bulScript = other.GetComponent<Bullet>();
+            TakeDamage(bulScript.damage);
+            getSlow(bulScript.freezeAmount);
             Destroy(other.gameObject);
-            TakeDamage(1);   // her mermi 1 can eksiltir
         }
     }
 
@@ -96,9 +98,12 @@ public class BossController : MonoBehaviour
         currentHealth -= amount;
 
         if (currentHealth <= 0)
-            Die();
+           Die();
     }
-
+    void getSlow(float freezeAmount)
+    {
+        verticalSpeed *= freezeAmount;
+    }
     void Die()
     {
         if (ScoreManager.Instance != null)
@@ -106,9 +111,9 @@ public class BossController : MonoBehaviour
             ScoreManager.Instance.AddScore(1000, 1);
             ScoreManager.Instance.AddScore(1000, 2);
         }
-
-        SceneManager.LoadScene("WinScene");
-
+        GameManager.Instance.StartCoroutine(GameManager.Instance.Finish());
         Destroy(gameObject);
+        
     }
+    
 }

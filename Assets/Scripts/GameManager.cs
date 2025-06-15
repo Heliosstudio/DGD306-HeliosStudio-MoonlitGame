@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
             case "Scene1": levelTime = 90f; break;
             case "Scene2": levelTime = 120f; break;
             case "Scene3": levelTime = 150f; break;
-            default: levelTime = 0f; break;
+            default: levelTime = 60f; break;
         }
 
         if (scene.name == "Scene1" || scene.name == "Scene2" || scene.name == "Scene3")
@@ -70,6 +71,12 @@ public class GameManager : MonoBehaviour
         if (playersAlive <= 0)
 
             SceneManager.LoadScene("LostScene");
+    }
+   
+    public IEnumerator Finish()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        SceneManager.LoadScene("WinScene");
     }
 }
 
